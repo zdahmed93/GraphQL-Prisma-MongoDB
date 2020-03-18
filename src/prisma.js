@@ -5,10 +5,18 @@ const prisma = new Prisma({
     endpoint: 'http://localhost:4466/'
 })
 
-prisma.query.users(null, '{ id name email posts {id title published} }')
-            .then(data => console.log(JSON.stringify({users: data}, null, 2)))
-            .catch(error => console.log({error}))
 
-prisma.query.comments(null, '{ id text author { id name } }')
-            .then(data => console.log(JSON.stringify({comments: data}, null, 2)))
-            .catch(error => console.log({error}))
+prisma.mutation.createPost({
+    data: {
+        title: "Prisma",
+        body: "Prisma is awesome",
+        published: true,
+        author: {
+            connect: {
+                id: "5e71fbcf0274390007244957"
+            }
+        }
+    }
+}, '{id title body published}').then(data => console.log(JSON.stringify(data, null, 4)))
+                               .catch(error => console.log({error}))
+
