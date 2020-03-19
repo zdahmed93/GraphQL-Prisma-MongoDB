@@ -14,22 +14,23 @@ const Query = {
             published: false
         }
     },
-    users(parent, args, context, info) {
-        const db = context.db;
-        const {query} = args
-        if (!query) {
-            return db.users
-        } else {
-            return db.users.filter(user => user.name.toLowerCase().includes(query.toLowerCase()))
-        }
+    users(parent, args, { prisma }, info) {
+        return prisma.query.users(null, info)
+        // const {query} = args
+        // if (!query) {
+        //     return db.users
+        // } else {
+        //     return db.users.filter(user => user.name.toLowerCase().includes(query.toLowerCase()))
+        // }
     },
-    posts(parent, args, {db}, info) {
-        const {query} = args
-        if (!query) {
-            return db.posts
-        } else {
-            return db.posts.filter(post => post.title.toLowerCase().includes(query.toLowerCase()) || post.body.toLowerCase().includes(query.toLowerCase()))
-        }
+    posts(parent, args, { prisma }, info) {
+        return prisma.query.posts(null, info)
+        // const {query} = args
+        // if (!query) {
+        //     return db.posts
+        // } else {
+        //     return db.posts.filter(post => post.title.toLowerCase().includes(query.toLowerCase()) || post.body.toLowerCase().includes(query.toLowerCase()))
+        // }
     },
     comments(parent, args, {db}, info) {
         return db.comments
